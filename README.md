@@ -1,2 +1,2 @@
 # di-challenge
-Dentsu International | Optimisation Challenge 
+DI | Optimisation Challenge 
