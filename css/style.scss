@@ -1,1 +1,115 @@
+$green-dark: #008385;
+$white: #ffffff;
+$bold-font: "TheSans Spire Bold";
 
+.cc-optimize {
+  // Hide Elements
+  section.news-feed,
+  .cc-hide-label > div > label,
+  .cc-hide-select .select-wrapper {
+    display: none;
+  }
+
+  // Re-styling existing elements ==========================================================
+  .enquiry-form__content {
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(125, 125, 125, 0.3);
+    box-shadow: 0px 0px 15px 0px rgba(125, 125, 125, 0.3);
+    margin-bottom: 98px;
+  }
+
+  .enquiry-form__tabs__content__inner__container {
+    max-width: 938px;
+    padding: 24px 0;
+  }
+
+  .grid.cc-0 {
+    display: grid;
+    .cc-4 {
+      grid-area: 3 / 1 / 4 / 2;
+    }
+  }
+
+  // Style new elements ==========================================================
+  div[class*="cc-sec-title"] {
+    margin-bottom: 28px;
+  }
+
+  p.cc-desc-mandatory {
+    margin-bottom: 16px;
+  }
+
+  div[class*="cc-sec-title"] > h6 {
+    font-family: $bold-font;
+    background-color: $green-dark;
+    padding: 20px 16px;
+    margin-bottom: 0;
+    color: $white;
+  }
+
+  //   Step 1 Styling
+  &.cc-step-1 {
+    .cc-5,
+    .cc-6,
+    .cc-7,
+    .cc-8,
+    .cc-9,
+    .cc-10,
+    .cc-11,
+    .cc-12 > div {
+      display: none;
+    }
+
+    .cc-1 .enquiry-form__tabs__content__inner__container__element,
+    .cc-2 .enquiry-form__tabs__content__inner__container__element {
+      margin: 0 22px 48px 22px;
+    }
+
+    .cc-step-btn {
+      border: none;
+      border: 1px solid #008385;
+      padding: 11px 31px !important;
+      border-radius: 21.5px;
+      background-color: #008385;
+      color: #fff;
+      font-family: "TheSans Spire Bold";
+      box-sizing: border-box;
+      line-height: 1;
+    }
+  }
+
+  //   Step 2 Styling
+  &.cc-step-2 {
+    .cc-1,
+    .cc-2,
+    .cc-3,
+    .cc-4,
+    .cc-5 {
+      display: none;
+    }
+    .cc-step-btn {
+      border: none;
+      border: 1px solid #19ccbb;
+      padding: 11px 31px !important;
+      border-radius: 21.5px;
+      background-color: #f0fafa;
+      color: #008385;
+      font-family: "TheSans Spire Bold";
+      box-sizing: border-box;
+      line-height: 1;
+    }
+  }
+
+  .cc-btn-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 60px;
+    gap: 12px;
+
+    button {
+      background-color: #f0fafa;
+      border: 1px solid #19ccbb;
+      border-radius: 3px;
+      color: #626262;
+    }
+  }
+}

@@ -1,1 +1,87 @@
-/*# sourceMappingURL=style.css.map */
+.cc-optimize section.news-feed,
+.cc-optimize .cc-hide-label > div > label,
+.cc-optimize .cc-hide-select .select-wrapper {
+  display: none;
+}
+.cc-optimize .enquiry-form__content {
+  box-shadow: 0px 0px 15px 0px rgba(125, 125, 125, 0.3);
+  margin-bottom: 98px;
+}
+.cc-optimize .enquiry-form__tabs__content__inner__container {
+  max-width: 938px;
+  padding: 24px 0;
+}
+.cc-optimize .grid.cc-0 {
+  display: grid;
+}
+.cc-optimize .grid.cc-0 .cc-4 {
+  grid-area: 3/1/4/2;
+}
+.cc-optimize div[class*=cc-sec-title] {
+  margin-bottom: 28px;
+}
+.cc-optimize p.cc-desc-mandatory {
+  margin-bottom: 16px;
+}
+.cc-optimize div[class*=cc-sec-title] > h6 {
+  font-family: "TheSans Spire Bold";
+  background-color: #008385;
+  padding: 20px 16px;
+  margin-bottom: 0;
+  color: #ffffff;
+}
+.cc-optimize.cc-step-1 .cc-5,
+.cc-optimize.cc-step-1 .cc-6,
+.cc-optimize.cc-step-1 .cc-7,
+.cc-optimize.cc-step-1 .cc-8,
+.cc-optimize.cc-step-1 .cc-9,
+.cc-optimize.cc-step-1 .cc-10,
+.cc-optimize.cc-step-1 .cc-11,
+.cc-optimize.cc-step-1 .cc-12 > div {
+  display: none;
+}
+.cc-optimize.cc-step-1 .cc-1 .enquiry-form__tabs__content__inner__container__element,
+.cc-optimize.cc-step-1 .cc-2 .enquiry-form__tabs__content__inner__container__element {
+  margin: 0 22px 48px 22px;
+}
+.cc-optimize.cc-step-1 .cc-step-btn {
+  border: none;
+  border: 1px solid #008385;
+  padding: 11px 31px !important;
+  border-radius: 21.5px;
+  background-color: #008385;
+  color: #fff;
+  font-family: "TheSans Spire Bold";
+  box-sizing: border-box;
+  line-height: 1;
+}
+.cc-optimize.cc-step-2 .cc-1,
+.cc-optimize.cc-step-2 .cc-2,
+.cc-optimize.cc-step-2 .cc-3,
+.cc-optimize.cc-step-2 .cc-4,
+.cc-optimize.cc-step-2 .cc-5 {
+  display: none;
+}
+.cc-optimize.cc-step-2 .cc-step-btn {
+  border: none;
+  border: 1px solid #19ccbb;
+  padding: 11px 31px !important;
+  border-radius: 21.5px;
+  background-color: #f0fafa;
+  color: #008385;
+  font-family: "TheSans Spire Bold";
+  box-sizing: border-box;
+  line-height: 1;
+}
+.cc-optimize .cc-btn-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 60px;
+  gap: 12px;
+}
+.cc-optimize .cc-btn-wrap button {
+  background-color: #f0fafa;
+  border: 1px solid #19ccbb;
+  border-radius: 3px;
+  color: #626262;
+}/*# sourceMappingURL=style.css.map */
