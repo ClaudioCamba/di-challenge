@@ -1,21 +1,42 @@
-.cc-optimize section.news-feed,
+.cc-optimize .lime-turq {
+  color: #19ccbb;
+}
+.cc-optimize .cc-hide,
+.cc-optimize section.news-feed.hide-news,
 .cc-optimize .cc-hide-label > div > label,
 .cc-optimize .cc-hide-select .select-wrapper {
   display: none;
+}
+.cc-optimize .site-content {
+  overflow: hidden;
 }
 .cc-optimize .enquiry-form__content {
   box-shadow: 0px 0px 15px 0px rgba(125, 125, 125, 0.3);
   margin-bottom: 98px;
 }
 .cc-optimize .enquiry-form__tabs__content__inner__container {
-  max-width: 938px;
-  padding: 24px 0;
+  max-width: 918px;
+  padding: 20px 0 26px 0;
 }
 .cc-optimize .grid.cc-0 {
   display: grid;
 }
 .cc-optimize .grid.cc-0 .cc-4 {
   grid-area: 3/1/4/2;
+}
+.cc-optimize .cc-4 .select-wrapper,
+.cc-optimize .cc-6 .grid .field-inner,
+.cc-optimize .cc-7 .grid .field-inner {
+  max-width: 490px;
+}
+.cc-optimize .cc-6 .grid__cell:first-child .select-wrapper {
+  max-width: 210px;
+}
+.cc-optimize .cc-7 > .grid {
+  display: grid;
+}
+.cc-optimize .cc-7 > .grid > .grid__cell:last-child {
+  grid-area: 1/1/2/2;
 }
 .cc-optimize div[class*=cc-sec-title] {
   margin-bottom: 28px;
@@ -29,6 +50,7 @@
   padding: 20px 16px;
   margin-bottom: 0;
   color: #ffffff;
+  line-height: 1;
 }
 .cc-optimize.cc-step-1 .cc-5,
 .cc-optimize.cc-step-1 .cc-6,
@@ -42,18 +64,41 @@
 }
 .cc-optimize.cc-step-1 .cc-1 .enquiry-form__tabs__content__inner__container__element,
 .cc-optimize.cc-step-1 .cc-2 .enquiry-form__tabs__content__inner__container__element {
-  margin: 0 22px 48px 22px;
+  margin: 0 16px 48px 16px;
+}
+.cc-optimize.cc-step-1 .cc-3 .enquiry-form__tabs__content__inner__container__element textarea {
+  resize: none;
+}
+.cc-optimize.cc-step-1 .cc-3 .enquiry-form__tabs__content__inner__container__element {
+  margin-bottom: 0;
 }
 .cc-optimize.cc-step-1 .cc-step-btn {
-  border: none;
-  border: 1px solid #008385;
+  max-width: 154px;
+  width: 100%;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  font-family: "TheSans Spire Bold";
+  box-sizing: border-box;
+  border: 0;
+  line-height: 1;
+  display: inline-block;
+  padding: 7px 10px 8px 10px;
+  color: #fff;
+  position: relative;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+  outline: 0;
   padding: 11px 31px !important;
   border-radius: 21.5px;
   background-color: #008385;
   color: #fff;
-  font-family: "TheSans Spire Bold";
-  box-sizing: border-box;
-  line-height: 1;
+}
+.cc-optimize.cc-step-1 .cc-step-btn:hover {
+  background-color: #00a4a6;
+  text-decoration: underline;
 }
 .cc-optimize.cc-step-2 .cc-1,
 .cc-optimize.cc-step-2 .cc-2,
@@ -85,12 +130,17 @@
   border-radius: 3px;
   color: #626262;
 }
+.cc-optimize .cc-btn-wrap button.cc-active {
+  background-color: #00a4a6;
+  color: #ffffff;
+}
 .cc-optimize .cc-review-section {
   background-color: #f0fafa;
 }
 .cc-optimize .cc-review-section * {
   margin: 0;
   box-sizing: border-box;
+  line-height: 1.3;
 }
 .cc-optimize .cc-review-section .cc-review-inner {
   padding: 58px 0;
@@ -100,13 +150,35 @@
   display: grid;
   grid-template-columns: 186px auto;
   grid-template-rows: repeat(3, auto);
+  align-items: center;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-feedback {
   grid-area: 1/1/2/3;
+  margin-bottom: 30px;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-feedback h3 {
+  margin-bottom: 22px;
+  font-size: 34px;
+  font-weight: 100;
+  font-family: Lato-Light;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-feedback p {
+  font-size: 19px;
+  max-width: 944px;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-recommend {
   grid-area: 2/1/3/2;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-recommend h3,
+.cc-optimize .cc-review-section .cc-review-inner .cc-recommend p {
+  max-width: 182px;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-recommend p {
+  font-size: 16px;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-recommend .cc-rec-stars {
   background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
@@ -118,7 +190,7 @@
   margin: 0 auto;
   margin-bottom: 10px;
 }
-.cc-optimize .cc-review-section .cc-review-inner .cc-recommend .cc-stars {
+.cc-optimize .cc-review-section .cc-review-inner .cc-recommend .cc-rec-stars .cc-stars {
   background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
   background-position: 0 100%;
   float: left;
@@ -129,39 +201,80 @@
   grid-area: 2/2/3/3;
   display: flex;
   flex-direction: column;
+  border-left: 1px solid #cfcfcf;
+  padding-left: 22px;
+  gap: 6px;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: -webkit-max-content 180px auto 50px;
+  grid-template-columns: max-content 180px auto 50px;
+  grid-auto-rows: 16px;
+  gap: 8px;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap > span {
+  font-size: 16px;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap .cc-bar-wrap {
   background: #cfcfcf;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 4px;
+  max-width: 446px;
+  margin: 0 auto;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap .cc-bar-wrap span {
   display: block;
   background-color: #01a4a6;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 4px;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap span:last-child {
+  text-align: center;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap .cc-star {
   display: inline-block;
   background-image: url("https://www.spirehealthcare.com/dist/images/ui/StarEmpty.png");
   background-repeat: no-repeat;
   background-size: contain;
-  height: 14px;
-  width: 14px;
+  height: 16px;
+  width: 16px;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap .cc-checked-star {
   display: inline-block;
   background-image: url("https://www.spirehealthcare.com/dist/images/ui/StarFilled.png");
   background-repeat: no-repeat;
   background-size: contain;
-  height: 14px;
-  width: 14px;
+  height: 16px;
+  width: 16px;
 }
 .cc-optimize .cc-review-section .cc-review-inner .cc-btn-container {
   grid-area: 3/1/4/3;
   text-align: center;
+  margin-top: 40px;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-btn-container a {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  font-family: "TheSans Spire Bold";
+  box-sizing: border-box;
+  border: 0;
+  line-height: 1;
+  display: inline-block;
+  padding: 7px 10px 8px 10px;
+  color: #fff;
+  position: relative;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+  outline: 0;
+  padding: 11px 31px !important;
+  border-radius: 21.5px;
+  background-color: #008385;
+  color: #fff;
+}
+.cc-optimize .cc-review-section .cc-review-inner .cc-btn-container a:hover {
+  background-color: #00a4a6;
+  text-decoration: underline;
 }/*# sourceMappingURL=style.css.map */

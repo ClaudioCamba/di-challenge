@@ -9,6 +9,8 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       container: document.querySelector(".site-content"),
       url: "https://www.spirehealthcare.com/patient-information/patient-feedback/",
       button: "Visit our patient reviews",
+      feedback:
+        "We take great pride in delivering the best experience possible for all of our patients and we're proud of the feedback we get. We acknowledge that we don't always get it right but believe in using patient feedback to continuously improve the experience we provide.",
       pageHTML: document.createElement("div"),
       title: document.createElement("h3"),
       desc: document.createElement("p"),
@@ -17,11 +19,11 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       percent: "",
       responses: document.createElement("p"),
       ratings: [
-        [5, "very good"],
-        [4, "Good"],
-        [3, "Neither good nor poor"],
-        [2, "Poor"],
-        [1, "Very Poor"],
+        [5, "Extremely likely"],
+        [4, "Likely"],
+        [3, "Neither likely nor unlikely"],
+        [2, "Unlikely"],
+        [1, "Extremely unlikely"],
       ],
     };
 
@@ -31,7 +33,7 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
     const getData = (data) => {
       values.pageHTML.innerHTML = data;
       values.title.innerText = values.pageHTML.querySelector("h1").innerText;
-      values.desc.innerHTML = values.pageHTML.querySelector(".lead").innerText;
+      //   values.desc.innerHTML = values.pageHTML.querySelector(".lead").innerText;
       values.oldReview = values.pageHTML.querySelectorAll("#customerratingssummary-0")[0];
       values.percent = values.oldReview.querySelector(".star-ratings-sprite span").style.width;
       values.responses.innerText = values.oldReview.querySelector(".starRating div:not([class])").innerText;
@@ -46,7 +48,8 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
     const intro = () => {
       const introDiv = document.createElement("div");
       introDiv.classList.add("cc-feedback");
-      values.desc.innerText = values.desc.innerText.split(".").splice(1, 2).join(".").trim() + ".";
+      values.desc.innerText = values.feedback;
+      //   values.desc.innerText = values.desc.innerText.split(".").splice(1, 2).join(".").trim() + ".";
       introDiv.appendChild(values.title);
       introDiv.appendChild(values.desc);
       return introDiv;
@@ -135,6 +138,7 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       reviewInner.appendChild(reviewBars());
       reviewInner.appendChild(feedbackBtn());
       reviewDiv.appendChild(reviewInner);
+      document.querySelector("section.news-feed").classList.add("hide-news");
       values.container.appendChild(reviewDiv);
     };
   };
@@ -152,7 +156,7 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
         title: "Make an enquiry",
         description:
           "If you need to get in touch with us, please complete the below form and someone from your local Spire team will get back to you",
-        mandatory: "Fields marked with a <span>*</span> are mandatory and must be completed",
+        mandatory: 'Fields marked with a <span class="lime-turq">*</span> are mandatory and must be completed',
         enquiry: "Enquiry details",
         personal: "Personal details",
       },
@@ -240,7 +244,20 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
             if (option.value !== "") {
               const button = document.createElement("button");
               button.type = "button";
-              button.innerText = option.innerText;
+
+              // Buttons text
+              if (option.innerText.indexOf("appointment") > -1) {
+                button.innerText = "Make an appointment";
+              } else if (option.innerText.indexOf("quotation") > -1) {
+                button.innerText = "Get a quotation";
+              } else if (option.innerText.indexOf("Information") > -1) {
+                button.innerText = "Find out more information";
+              } else if (option.innerText.indexOf("Paying") > -1) {
+                button.innerText = "Pay for it yourself";
+              } else {
+                button.innerText = option.innerText;
+              }
+
               button.setAttribute("data-value", option.value);
               // If option already selected add active class
               if (container.querySelector("select").value === option.value) {
@@ -279,7 +296,60 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       }
     };
 
+    const addAsterisk = () => {
+      const labels = [values.allElements[3], values.allElements[4], values.allElements[7], values.allElements[6]];
+      for (const label of labels) {
+        const innerLabels = label.querySelectorAll("label");
+        for (const inLabel of innerLabels) {
+          const asterisk = document.createElement("span");
+          asterisk.innerHTML = " *";
+          asterisk.className = "lime-turq";
+          inLabel.appendChild(asterisk);
+        }
+      }
+    };
+
     // HELPER FUNCTIONS ==========================================================
+    const addReadMore = () => {
+      // Label correct paragraphs
+      const checkString = ["Spire would like to provide", "We may contact you by email,"];
+      const paragraphs = values.allElements[9].querySelectorAll("p");
+      const storePara = [];
+      for (const p of paragraphs) {
+        for (const string of checkString) {
+          if (p.innerText.indexOf(string) > -1) {
+            // p.classList.add("cc-read-more");
+            storePara.push(p);
+          }
+        }
+      }
+      // Add learn more
+      for (const p of storePara) {
+        const splitP = p.innerText.split(".");
+        const learnMore = splitP.splice(1, splitP.length);
+        console.log(p);
+        console.log(splitP);
+        console.log(learnMore);
+      }
+    };
+
+    const switchClasses = () => {
+      const section = [values.allElements[6], values.allElements[7]];
+      for (const sec of section) {
+        sec.classList.remove("unit-1-2--desktop");
+        sec.classList.add("unit-1-1--desktop");
+      }
+    };
+
+    const hideConfirmEmail = () => {
+      const ogEmail = document.querySelector("#enquiry-email");
+      const confirmEmail = document.querySelector("#enquiry-email-confirm");
+      ogEmail.addEventListener("input", (e) => {
+        confirmEmail.value = e.target.value;
+      });
+      confirmEmail.parentNode.parentNode.parentElement.classList.add("cc-hide");
+    };
+
     // Control Step 1 / 2
     const switchSteps = () => {
       if (values.container.classList.contains("cc-step-1")) {
@@ -308,7 +378,10 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
     addControlBtn();
     addHeaders();
     addListBtn();
-
+    addAsterisk();
+    switchClasses();
+    hideConfirmEmail();
+    addReadMore();
     console.log(values.allElements);
   };
 

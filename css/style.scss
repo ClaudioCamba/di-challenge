@@ -4,16 +4,58 @@ $green-0: #f0fafa;
 $load-bg: #cfcfcf;
 $load-col: #01a4a6;
 $bold-font: "TheSans Spire Bold";
+$light-font: "TheSans Spire Light";
+$lato-font: "Lato-Regular";
+$star-size: 16px;
+$font-s-16: 16px;
+$bar-radius: 4px;
 
+@mixin btn-style {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  font-size: 1rem;
+  font-family: "TheSans Spire Bold";
+  box-sizing: border-box;
+  border: 0;
+  line-height: 1;
+  display: inline-block;
+  padding: 7px 10px 8px 10px;
+  color: #fff;
+  position: relative;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+  outline: 0;
+}
+
+@mixin btn-dark-green {
+  padding: 11px 31px !important;
+  border-radius: 21.5px;
+  background-color: #008385;
+  color: #fff;
+}
+
+// Component style ==========================================================
 .cc-optimize {
+  // Helper classes
+  .lime-turq {
+    color: #19ccbb;
+  }
+
+  // Re-styling existing elements
   // Hide Elements
-  section.news-feed,
+  .cc-hide,
+  section.news-feed.hide-news,
   .cc-hide-label > div > label,
   .cc-hide-select .select-wrapper {
     display: none;
   }
 
-  // Re-styling existing elements ==========================================================
+  .site-content {
+    overflow: hidden;
+  }
+
   .enquiry-form__content {
     -webkit-box-shadow: 0px 0px 15px 0px rgba(125, 125, 125, 0.3);
     box-shadow: 0px 0px 15px 0px rgba(125, 125, 125, 0.3);
@@ -21,14 +63,29 @@ $bold-font: "TheSans Spire Bold";
   }
 
   .enquiry-form__tabs__content__inner__container {
-    max-width: 938px;
-    padding: 24px 0;
+    max-width: 918px;
+    padding: 20px 0 26px 0;
   }
 
   .grid.cc-0 {
     display: grid;
     .cc-4 {
       grid-area: 3 / 1 / 4 / 2;
+    }
+  }
+
+  .cc-4 .select-wrapper,
+  .cc-6 .grid .field-inner,
+  .cc-7 .grid .field-inner {
+    max-width: 490px;
+  }
+  .cc-6 .grid__cell:first-child .select-wrapper {
+    max-width: 210px;
+  }
+  .cc-7 > .grid {
+    display: grid;
+    > .grid__cell:last-child {
+      grid-area: 1/1/2/2;
     }
   }
 
@@ -47,6 +104,7 @@ $bold-font: "TheSans Spire Bold";
     padding: 20px 16px;
     margin-bottom: 0;
     color: $white;
+    line-height: 1;
   }
 
   //   Step 1 Styling
@@ -64,19 +122,28 @@ $bold-font: "TheSans Spire Bold";
 
     .cc-1 .enquiry-form__tabs__content__inner__container__element,
     .cc-2 .enquiry-form__tabs__content__inner__container__element {
-      margin: 0 22px 48px 22px;
+      margin: 0 16px 48px 16px;
+    }
+
+    .cc-3 {
+      .enquiry-form__tabs__content__inner__container__element textarea {
+        resize: none;
+      }
+      .enquiry-form__tabs__content__inner__container__element {
+        margin-bottom: 0;
+      }
     }
 
     .cc-step-btn {
-      border: none;
-      border: 1px solid #008385;
-      padding: 11px 31px !important;
-      border-radius: 21.5px;
-      background-color: #008385;
-      color: #fff;
-      font-family: "TheSans Spire Bold";
-      box-sizing: border-box;
-      line-height: 1;
+      max-width: 154px;
+      width: 100%;
+      @include btn-style;
+      @include btn-dark-green;
+    }
+
+    .cc-step-btn:hover {
+      background-color: #00a4a6;
+      text-decoration: underline;
     }
   }
 
@@ -89,6 +156,8 @@ $bold-font: "TheSans Spire Bold";
     .cc-5 {
       display: none;
     }
+
+    // ==
     .cc-step-btn {
       border: none;
       border: 1px solid #19ccbb;
@@ -114,14 +183,20 @@ $bold-font: "TheSans Spire Bold";
       border-radius: 3px;
       color: #626262;
     }
+    button.cc-active {
+      background-color: #00a4a6;
+      color: #ffffff;
+    }
   }
-  // Review section
+
+  // Review section ==========================================================
   .cc-review-section {
     background-color: $green-0;
 
     * {
       margin: 0;
       box-sizing: border-box;
+      line-height: 1.3;
     }
 
     .cc-review-inner {
@@ -132,14 +207,39 @@ $bold-font: "TheSans Spire Bold";
       display: grid;
       grid-template-columns: 186px auto;
       grid-template-rows: repeat(3, auto);
+      align-items: center;
+
       // Review Intro
       .cc-feedback {
         grid-area: 1 / 1 / 2 / 3;
+        margin-bottom: 30px;
+        h3 {
+          margin-bottom: 22px;
+          font-size: 34px;
+          font-weight: 100;
+          font-family: Lato-Light;
+        }
+        p {
+          font-size: 19px;
+          max-width: 944px;
+        }
       }
       // Review section: LEFT
       .cc-recommend {
         grid-area: 2/ 1/ 3/ 2;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        h3,
+        p {
+          max-width: 182px;
+        }
+        p {
+          font-size: 16px;
+        }
+
         .cc-rec-stars {
           background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
           font-size: 0;
@@ -149,13 +249,13 @@ $bold-font: "TheSans Spire Bold";
           width: 150px;
           margin: 0 auto;
           margin-bottom: 10px;
-        }
-        .cc-stars {
-          background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
-          background-position: 0 100%;
-          float: left;
-          height: 28px;
-          display: block;
+          .cc-stars {
+            background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
+            background-position: 0 100%;
+            float: left;
+            height: 28px;
+            display: block;
+          }
         }
       }
       // Review section: RIGHT
@@ -163,28 +263,45 @@ $bold-font: "TheSans Spire Bold";
         grid-area: 2/ 2/ 3/ 3;
         display: flex;
         flex-direction: column;
+        border-left: 1px solid $load-bg;
+        padding-left: 22px;
+        gap: 6px;
 
         .cc-row-wrap {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: -webkit-max-content 180px auto 50px;
+          grid-template-columns: max-content 180px auto 50px;
+          grid-auto-rows: 16px;
+          gap: 8px;
+
+          > span {
+            font-size: 16px;
+          }
+
           .cc-bar-wrap {
             background: $load-bg;
             width: 100%;
-            border-radius: 5px;
+            border-radius: $bar-radius;
+            max-width: 446px;
+            margin: 0 auto;
+            // overflow: hidden;
             span {
               display: block;
               background-color: $load-col;
               height: 100%;
-              border-radius: 5px;
+              border-radius: $bar-radius;
             }
+          }
+          span:last-child {
+            text-align: center;
           }
           .cc-star {
             display: inline-block;
             background-image: url("https://www.spirehealthcare.com/dist/images/ui/StarEmpty.png");
             background-repeat: no-repeat;
             background-size: contain;
-            height: 14px;
-            width: 14px;
+            height: $star-size;
+            width: $star-size;
           }
 
           .cc-checked-star {
@@ -192,8 +309,8 @@ $bold-font: "TheSans Spire Bold";
             background-image: url("https://www.spirehealthcare.com/dist/images/ui/StarFilled.png");
             background-repeat: no-repeat;
             background-size: contain;
-            height: 14px;
-            width: 14px;
+            height: $star-size;
+            width: $star-size;
           }
         }
       }
@@ -201,6 +318,15 @@ $bold-font: "TheSans Spire Bold";
       .cc-btn-container {
         grid-area: 3 / 1 / 4 / 3;
         text-align: center;
+        margin-top: 40px;
+        a {
+          @include btn-style;
+          @include btn-dark-green;
+        }
+        a:hover {
+          background-color: #00a4a6;
+          text-decoration: underline;
+        }
       }
     }
   }
