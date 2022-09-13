@@ -1,15 +1,147 @@
 // Check if function already exists on the page
 if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefined") {
-  // Review section
+  // ==========================================================
+  // REVIEW SECTION
+  // ==========================================================
   const ccPatientFeedback = () => {
-    jQuery.get("https://www.spirehealthcare.com/patient-information/patient-feedback/").success((data) => addFeedback(data));
-    // Add patient feedback section if successful
-    let pageHTML;
-    const addFeedback = (data) => {
-      pageHTML = data;
+    // Variables
+    const values = {
+      container: document.querySelector(".site-content"),
+      url: "https://www.spirehealthcare.com/patient-information/patient-feedback/",
+      button: "Visit our patient reviews",
+      pageHTML: document.createElement("div"),
+      title: document.createElement("h3"),
+      desc: document.createElement("p"),
+      oldReview: "",
+      recommend: "Likelihood to recommend",
+      percent: "",
+      responses: document.createElement("p"),
+      ratings: [
+        [5, "very good"],
+        [4, "Good"],
+        [3, "Neither good nor poor"],
+        [2, "Poor"],
+        [1, "Very Poor"],
+      ],
     };
-    // const
+
+    jQuery.get(values.url).success((data) => getData(data)); // Get page HTML
+
+    // Store specific sections
+    const getData = (data) => {
+      values.pageHTML.innerHTML = data;
+      values.title.innerText = values.pageHTML.querySelector("h1").innerText;
+      values.desc.innerHTML = values.pageHTML.querySelector(".lead").innerText;
+      values.oldReview = values.pageHTML.querySelectorAll("#customerratingssummary-0")[0];
+      values.percent = values.oldReview.querySelector(".star-ratings-sprite span").style.width;
+      values.responses.innerText = values.oldReview.querySelector(".starRating div:not([class])").innerText;
+      const ratings = values.oldReview.querySelectorAll(".customer-ratings--summary-chart > div");
+      for (let i = 0; i < ratings.length; i++) {
+        values.ratings[i].push(ratings[i].querySelector(".bar--percent").innerText);
+      }
+      addReviewSec();
+    };
+
+    // Review intro section
+    const intro = () => {
+      const introDiv = document.createElement("div");
+      introDiv.classList.add("cc-feedback");
+      values.desc.innerText = values.desc.innerText.split(".").splice(1, 2).join(".").trim() + ".";
+      introDiv.appendChild(values.title);
+      introDiv.appendChild(values.desc);
+      return introDiv;
+    };
+
+    // Review section: RIGHT
+    const reviewBars = () => {
+      const divBars = document.createElement("div");
+      divBars.classList.add("cc-review-bars");
+
+      // Create each row
+      for (const rate of values.ratings) {
+        const rowWrap = document.createElement("div");
+        rowWrap.className = "cc-row-wrap";
+
+        // Stars ----------------------
+        const starWrap = document.createElement("div");
+        starWrap.className = "cc-star-wrap";
+        for (let i = 0; i < 5; i++) {
+          const span = document.createElement("span");
+          i < rate[0] ? (span.className = "cc-checked-star") : (span.className = "cc-star");
+          starWrap.appendChild(span);
+        }
+        rowWrap.appendChild(starWrap);
+
+        // Rate text ----------------------
+        const span = document.createElement("span");
+        span.innerText = rate[1];
+        rowWrap.appendChild(span);
+
+        // Loading bar ----------------------
+        const barWrap = document.createElement("div");
+        const loadSpan = document.createElement("span");
+        barWrap.className = "cc-bar-wrap";
+        loadSpan.style.width = rate[2];
+        barWrap.appendChild(loadSpan);
+        rowWrap.appendChild(barWrap);
+
+        // Percent text
+        const percentSpan = document.createElement("span");
+        percentSpan.innerText = rate[2];
+        rowWrap.appendChild(percentSpan);
+
+        // Append row to main div container
+        divBars.appendChild(rowWrap);
+      }
+      return divBars;
+    };
+
+    // Review section: LEFT
+    const review = () => {
+      const recommend = document.createElement("div");
+      const header = document.createElement("h3");
+      const starWrap = document.createElement("div");
+      const stars = document.createElement("span");
+      recommend.classList.add("cc-recommend");
+      starWrap.classList.add("cc-rec-stars");
+      stars.classList.add("cc-stars");
+      stars.style.width = values.percent;
+      header.innerText = values.recommend;
+      starWrap.appendChild(stars);
+      recommend.appendChild(header);
+      recommend.appendChild(starWrap);
+      recommend.appendChild(values.responses);
+      return recommend;
+    };
+
+    const feedbackBtn = () => {
+      const button = document.createElement("a");
+      const btnWrap = document.createElement("div");
+      btnWrap.classList.add("cc-btn-container");
+      button.href = values.url;
+      button.innerText = values.button;
+      btnWrap.appendChild(button);
+      return btnWrap;
+    };
+
+    // Intro title and description
+    const addReviewSec = () => {
+      const reviewDiv = document.createElement("div");
+      const reviewInner = document.createElement("div");
+      reviewInner.classList.add("cc-review-inner");
+      reviewDiv.classList.add("cc-review-section");
+      reviewInner.appendChild(intro());
+      reviewInner.appendChild(review());
+      reviewInner.appendChild(reviewBars());
+      reviewInner.appendChild(feedbackBtn());
+      reviewDiv.appendChild(reviewInner);
+      values.container.appendChild(reviewDiv);
+    };
   };
+
+  // ==========================================================
+  // ENQUIRY FORM
+  // ==========================================================
 
   const ccEnquiryForm = () => {
     // VARIABLES ==========================================================
@@ -182,7 +314,7 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
 
   // Wait for element to load
   const clearEnquiryForm = setInterval(function () {
-    if (document.querySelectorAll(".site-container #enquiry-form").length > 0 && jQuery) {
+    if (document.querySelectorAll(".site-container .site-content #enquiry-form").length > 0 && jQuery) {
       clearInterval(clearEnquiryForm);
       ccPatientFeedback();
       // Check if site-container exists

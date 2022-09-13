@@ -1,5 +1,8 @@
 $green-dark: #008385;
 $white: #ffffff;
+$green-0: #f0fafa;
+$load-bg: #cfcfcf;
+$load-col: #01a4a6;
 $bold-font: "TheSans Spire Bold";
 
 .cc-optimize {
@@ -91,7 +94,7 @@ $bold-font: "TheSans Spire Bold";
       border: 1px solid #19ccbb;
       padding: 11px 31px !important;
       border-radius: 21.5px;
-      background-color: #f0fafa;
+      background-color: $green-0;
       color: #008385;
       font-family: "TheSans Spire Bold";
       box-sizing: border-box;
@@ -106,10 +109,99 @@ $bold-font: "TheSans Spire Bold";
     gap: 12px;
 
     button {
-      background-color: #f0fafa;
+      background-color: $green-0;
       border: 1px solid #19ccbb;
       border-radius: 3px;
       color: #626262;
+    }
+  }
+  // Review section
+  .cc-review-section {
+    background-color: $green-0;
+
+    * {
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .cc-review-inner {
+      padding: 58px 0;
+      width: 100%;
+      max-width: 1002px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 186px auto;
+      grid-template-rows: repeat(3, auto);
+      // Review Intro
+      .cc-feedback {
+        grid-area: 1 / 1 / 2 / 3;
+      }
+      // Review section: LEFT
+      .cc-recommend {
+        grid-area: 2/ 1/ 3/ 2;
+        text-align: center;
+        .cc-rec-stars {
+          background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
+          font-size: 0;
+          height: 28px;
+          line-height: 0;
+          overflow: hidden;
+          width: 150px;
+          margin: 0 auto;
+          margin-bottom: 10px;
+        }
+        .cc-stars {
+          background: url("https://www.spirehealthcare.com/dist/images/ui/StarRatingSprite.png") repeat-x;
+          background-position: 0 100%;
+          float: left;
+          height: 28px;
+          display: block;
+        }
+      }
+      // Review section: RIGHT
+      .cc-review-bars {
+        grid-area: 2/ 2/ 3/ 3;
+        display: flex;
+        flex-direction: column;
+
+        .cc-row-wrap {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          .cc-bar-wrap {
+            background: $load-bg;
+            width: 100%;
+            border-radius: 5px;
+            span {
+              display: block;
+              background-color: $load-col;
+              height: 100%;
+              border-radius: 5px;
+            }
+          }
+          .cc-star {
+            display: inline-block;
+            background-image: url("https://www.spirehealthcare.com/dist/images/ui/StarEmpty.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 14px;
+            width: 14px;
+          }
+
+          .cc-checked-star {
+            display: inline-block;
+            background-image: url("https://www.spirehealthcare.com/dist/images/ui/StarFilled.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 14px;
+            width: 14px;
+          }
+        }
+      }
+      // Review section CTA
+      .cc-btn-container {
+        grid-area: 3 / 1 / 4 / 3;
+        text-align: center;
+      }
     }
   }
 }
