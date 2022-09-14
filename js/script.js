@@ -1,6 +1,51 @@
 // Check if function already exists on the page
 if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefined") {
   // ==========================================================
+  // HEADER SECTION
+  // ==========================================================
+
+  const ccHeader = () => {
+    const values = {
+      navAppend: document.querySelector(".enquiry-form__tabs__content__inner"),
+      headerAppend: document.querySelector("header.enquiry-form__header"),
+      contactAppend: document.querySelector(".inner-area.site-header__main__inner > .site-header__main__logo"),
+      title: "Make an enquiry",
+      desc: "If you need to get in touch with us, please complete the below form and someone from your local Spire team will get back to you.",
+      navHTML:
+        '<div class="cc-inner-nav"> <span class="cc-step-1-circle"> <span class="cc-circle"><span></span></span> </span> <span class="cc-line"> <hr> </span> <span class="cc-step-2-circle"> <span class="cc-circle"><span></span></span> </span></div><div class="cc-pages"> <span class="cc-step-1">Enquiry details</span> <span class="cc-step-2">Personal details</span> </div>',
+      headerHTML:
+        '<div class="cc-header-inner"> <h1>Make an enquiry</h1> <p>If you need to get in touch with us, please complete the below form and someone from your local Spire team will get back to you.</p></div>',
+      contact:
+        '<div class="contact-group "><a href="tel:020 8337 6691" class="contact-group__phone"><i class="fa fa-phone fa-flip-horizontal" aria-hidden="true"></i><span class="InfinityNumber">0203 608 3429</span></a><a target="" style="" href="//www.spirehealthcare.com/spire-st-anthonys-hospital/enquire/" class="contact-group__button ">Enquire</a></div>',
+    };
+
+    const buildNav = () => {
+      const nav = document.createElement("div");
+      nav.classList.add("cc-nav-bar");
+      nav.innerHTML = values.navHTML;
+      values.navAppend.insertBefore(nav, values.navAppend.firstChild);
+    };
+    const buildHeader = () => {
+      const header = document.createElement("div");
+      header.classList.add("cc-header");
+      header.innerHTML = values.headerHTML;
+      values.headerAppend.appendChild(header);
+      values.headerAppend.classList.add("cc-header-append");
+    };
+
+    const addContact = () => {
+      const contact = document.createElement("div");
+      contact.classList.add("site-header__contact-group");
+      contact.innerHTML = values.contact;
+      values.contactAppend.insertBefore(contact, values.contactAppend.lastChild);
+    };
+
+    // addContact();
+    buildHeader();
+    buildNav();
+  };
+
+  // ==========================================================
   // REVIEW SECTION
   // ==========================================================
   const ccPatientFeedback = () => {
@@ -310,28 +355,28 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
     };
 
     // HELPER FUNCTIONS ==========================================================
-    const addReadMore = () => {
-      // Label correct paragraphs
-      const checkString = ["Spire would like to provide", "We may contact you by email,"];
-      const paragraphs = values.allElements[9].querySelectorAll("p");
-      const storePara = [];
-      for (const p of paragraphs) {
-        for (const string of checkString) {
-          if (p.innerText.indexOf(string) > -1) {
-            // p.classList.add("cc-read-more");
-            storePara.push(p);
-          }
-        }
-      }
-      // Add learn more
-      for (const p of storePara) {
-        const splitP = p.innerText.split(".");
-        const learnMore = splitP.splice(1, splitP.length);
-        console.log(p);
-        console.log(splitP);
-        console.log(learnMore);
-      }
-    };
+    // const addReadMore = () => {
+    //   // Label correct paragraphs
+    //   const checkString = ["Spire would like to provide", "We may contact you by email,"];
+    //   const paragraphs = values.allElements[9].querySelectorAll("p");
+    //   const storePara = [];
+    //   for (const p of paragraphs) {
+    //     for (const string of checkString) {
+    //       if (p.innerText.indexOf(string) > -1) {
+    //         // p.classList.add("cc-read-more");
+    //         storePara.push(p);
+    //       }
+    //     }
+    //   }
+    //   // Add learn more
+    //   for (const p of storePara) {
+    //     const splitP = p.innerText.split(".");
+    //     const learnMore = splitP.splice(1, splitP.length);
+    //     console.log(p);
+    //     console.log(splitP);
+    //     console.log(learnMore);
+    //   }
+    // };
 
     const switchClasses = () => {
       const section = [values.allElements[6], values.allElements[7]];
@@ -381,19 +426,21 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
     addAsterisk();
     switchClasses();
     hideConfirmEmail();
-    addReadMore();
+    // addReadMore();
     console.log(values.allElements);
   };
 
   // Wait for element to load
   const clearEnquiryForm = setInterval(function () {
     if (document.querySelectorAll(".site-container .site-content #enquiry-form").length > 0 && jQuery) {
-      clearInterval(clearEnquiryForm);
-      ccPatientFeedback();
-      // Check if site-container exists
-      document.querySelector(".site-container").classList.add("cc-optimize");
-      document.querySelector(".site-container").classList.add("cc-step-1");
-      ccEnquiryForm();
+      if (document.querySelectorAll(".cc-optimize").length === 0) {
+        clearInterval(clearEnquiryForm);
+        document.querySelector(".site-container").classList.add("cc-optimize");
+        document.querySelector(".site-container").classList.add("cc-step-1");
+        ccHeader();
+        ccEnquiryForm();
+        ccPatientFeedback();
+      }
     } else if (document.readyState === "complete") {
       clearInterval(clearEnquiryForm);
     }
@@ -401,25 +448,29 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
 }
 
 /* 
-Step 1
-    - How can we help you: dropdown to button selection
-    - How do you intend to fund your treatment: dropdown to button selection
-    - Tells us your enquiry: move below select hospital
-    - Select hospital: move adobe tell us your enquiry
-    - Add cta for next step
+•Step 1 --------------
+•‘how can we help you’ form field completion
+•How  do you  intend to fund  your  treatment  formfield completion
+•Select a hospital form  field completion
+•Tell us more about your enquiry’ form fieldcompletion
+•Error  tracking on all fields
+•Interaction with ‘Next’ CTA
+•Step 2 --------------
+•Title form  field completion
+•Name form  field completion
+•Surname  form  field completion
+•Day/month/year  form  field completion
+•Email form  field completion
+•Phone  form  field completion
+•Postcode form  field completion
+•Interaction with ‘submit enquiry’ CTA
+•General --------------
+•Interaction  with patient reviews
+
 Step 2
-    - tell us your title: on single row
-    - what is your first name: on single row
-    - what is your surname: on single row
-    - Birthday: move up and on single row
-    - Postcode: move up and on single row
-    - Email address: on single line
-    - Phone number: on single line
-    - Shorten Marketing information
+    - Shorten Marketing information - read more
+    - rename labels
+    - add [?]
 All 
     - Target only when on enquire pages
-    - Patient feedback
-    - styling on the header
-    - Styling on the navigation
-
     */
