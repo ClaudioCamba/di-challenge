@@ -1,5 +1,5 @@
 // Check if function already exists on the page
-if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefined") {
+if (document.querySelectorAll(".cc-optimize").length === 0) {
   // ==========================================================
   // HEADER SECTION
   // ==========================================================
@@ -15,8 +15,6 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
         '<div class="cc-inner-nav"> <span class="cc-step-1-circle"> <span class="cc-circle"><span></span></span> </span> <span class="cc-line"> <hr> </span> <span class="cc-step-2-circle"> <span class="cc-circle"><span></span></span> </span></div><div class="cc-pages"> <span class="cc-step-1">Enquiry details</span> <span class="cc-step-2">Personal details</span> </div>',
       headerHTML:
         '<div class="cc-header-inner"> <h1>Make an enquiry</h1> <p>If you need to get in touch with us, please complete the below form and someone from your local Spire team will get back to you.</p></div>',
-      contact:
-        '<div class="contact-group "><a href="tel:020 8337 6691" class="contact-group__phone"><i class="fa fa-phone fa-flip-horizontal" aria-hidden="true"></i><span class="InfinityNumber">0203 608 3429</span></a><a target="" style="" href="//www.spirehealthcare.com/spire-st-anthonys-hospital/enquire/" class="contact-group__button ">Enquire</a></div>',
     };
 
     const buildNav = () => {
@@ -33,14 +31,6 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       values.headerAppend.classList.add("cc-header-append");
     };
 
-    const addContact = () => {
-      const contact = document.createElement("div");
-      contact.classList.add("site-header__contact-group");
-      contact.innerHTML = values.contact;
-      values.contactAppend.insertBefore(contact, values.contactAppend.lastChild);
-    };
-
-    // addContact();
     buildHeader();
     buildNav();
   };
@@ -78,7 +68,6 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
     const getData = (data) => {
       values.pageHTML.innerHTML = data;
       values.title.innerText = values.pageHTML.querySelector("h1").innerText;
-      //   values.desc.innerHTML = values.pageHTML.querySelector(".lead").innerText;
       values.oldReview = values.pageHTML.querySelectorAll("#customerratingssummary-0")[0];
       values.percent = values.oldReview.querySelector(".star-ratings-sprite span").style.width;
       values.responses.innerText = values.oldReview.querySelector(".starRating div:not([class])").innerText;
@@ -94,7 +83,6 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       const introDiv = document.createElement("div");
       introDiv.classList.add("cc-feedback");
       values.desc.innerText = values.feedback;
-      //   values.desc.innerText = values.desc.innerText.split(".").splice(1, 2).join(".").trim() + ".";
       introDiv.appendChild(values.title);
       introDiv.appendChild(values.desc);
       return introDiv;
@@ -341,42 +329,63 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       }
     };
 
-    const addAsterisk = () => {
-      const labels = [values.allElements[3], values.allElements[4], values.allElements[7], values.allElements[6]];
-      for (const label of labels) {
-        const innerLabels = label.querySelectorAll("label");
-        for (const inLabel of innerLabels) {
-          const asterisk = document.createElement("span");
-          asterisk.innerHTML = " *";
-          asterisk.className = "lime-turq";
-          inLabel.appendChild(asterisk);
-        }
-      }
-    };
-
-    // HELPER FUNCTIONS ==========================================================
-    // const addReadMore = () => {
-    //   // Label correct paragraphs
-    //   const checkString = ["Spire would like to provide", "We may contact you by email,"];
-    //   const paragraphs = values.allElements[9].querySelectorAll("p");
-    //   const storePara = [];
-    //   for (const p of paragraphs) {
-    //     for (const string of checkString) {
-    //       if (p.innerText.indexOf(string) > -1) {
-    //         // p.classList.add("cc-read-more");
-    //         storePara.push(p);
-    //       }
+    // const addAsterisk = () => {
+    //   const labels = [values.allElements[3], values.allElements[4], values.allElements[7], values.allElements[6]];
+    //   for (const label of labels) {
+    //     const innerLabels = label.querySelectorAll("label");
+    //     for (const inLabel of innerLabels) {
+    //       const asterisk = document.createElement("span");
+    //       asterisk.innerHTML = " *";
+    //       asterisk.className = "lime-turq";
+    //       inLabel.appendChild(asterisk);
     //     }
     //   }
-    //   // Add learn more
-    //   for (const p of storePara) {
-    //     const splitP = p.innerText.split(".");
-    //     const learnMore = splitP.splice(1, splitP.length);
-    //     console.log(p);
-    //     console.log(splitP);
-    //     console.log(learnMore);
-    //   }
     // };
+
+    // HELPER FUNCTIONS ==========================================================
+
+    const addReadMore = () => {
+      // Label correct paragraphs
+      const checkString = ["Spire would like to provide", "We may contact you by email,"];
+      const paragraphs = values.allElements[9].querySelectorAll("p");
+      const storePara = [];
+      for (const p of paragraphs) {
+        for (const string of checkString) {
+          if (p.innerText.indexOf(string) > -1) {
+            // p.classList.add("cc-read-more");
+            storePara.push(p);
+          }
+        }
+      }
+
+      // Add learn more
+      for (const p of storePara) {
+        const learnMore = p.innerText.split(".");
+        const read = document.createElement("span");
+        read.innerHTML = "&nbsp;&nbsp; Read more";
+        read.className = "cc-read-more";
+        const span = document.createElement("span");
+        if (p.innerText.indexOf(checkString[1]) > -1) {
+          p.innerHTML = learnMore.slice(0, 2).join(".") + ".";
+          span.innerHTML = learnMore.slice(2, learnMore.length).join(".");
+        } else {
+          p.innerHTML = learnMore.slice(0, 1).join(".") + ".";
+          span.innerHTML = learnMore.slice(1, learnMore.length).join(".");
+        }
+        span.style.display = "none";
+        read.addEventListener("click", (e) => {
+          if (span.style.display === "none") {
+            span.style.display = "inline";
+            e.target.innerHTML = "&nbsp;&nbsp; Read less";
+          } else {
+            span.style.display = "none";
+            e.target.innerHTML = "&nbsp;&nbsp; Read more";
+          }
+        });
+        p.appendChild(span);
+        p.appendChild(read);
+      }
+    };
 
     const switchClasses = () => {
       const section = [values.allElements[6], values.allElements[7]];
@@ -418,29 +427,60 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
       }
     };
 
+    // Rename labels
+    const renameLabels = () => {
+      const allLabels = document.querySelectorAll(".enquiry-form__tabs__content__inner__container__element label");
+      const oldLabel = [
+        "Type the detail of your enquiry",
+        "Title",
+        "First name",
+        "Surname",
+        "Date of birth",
+        "Postcode",
+        "Email address",
+        "Phone number",
+      ];
+      const newLabel = [
+        'Tell us a little more about your enquiry <span class="lime-turq">*</span>',
+        'What is your title <span class="lime-turq">*</span>',
+        'What is your first name <span class="lime-turq">*</span>',
+        'What is your surname <span class="lime-turq">*</span>',
+        'What is your date of birth <span class="lime-turq">*</span> <span class="dark-turq">?</span>',
+        'What is your postcode <span class="lime-turq">*</span> <span class="dark-turq">?</span>',
+        'What is your email address <span class="lime-turq">*</span>',
+        'What is your phone number <span class="lime-turq">*</span>',
+        'We use this to get in touch with you about your enquiry <span class="lime-turq">*</span>',
+      ];
+      // Loop and update labels
+      for (const label of allLabels) {
+        if (oldLabel.indexOf(label.innerText) > -1) {
+          const index = oldLabel.indexOf(label.innerText);
+          label.innerHTML = newLabel[index];
+        }
+      }
+    };
+
     // RUN FUNCTIONS ==========================================================
+    renameLabels();
     labelElements();
     addControlBtn();
     addHeaders();
     addListBtn();
-    addAsterisk();
+    // addAsterisk();
     switchClasses();
     hideConfirmEmail();
-    // addReadMore();
-    console.log(values.allElements);
+    addReadMore();
   };
 
   // Wait for element to load
   const clearEnquiryForm = setInterval(function () {
     if (document.querySelectorAll(".site-container .site-content #enquiry-form").length > 0 && jQuery) {
-      if (document.querySelectorAll(".cc-optimize").length === 0) {
-        clearInterval(clearEnquiryForm);
-        document.querySelector(".site-container").classList.add("cc-optimize");
-        document.querySelector(".site-container").classList.add("cc-step-1");
-        ccHeader();
-        ccEnquiryForm();
-        ccPatientFeedback();
-      }
+      clearInterval(clearEnquiryForm);
+      document.querySelector(".site-container").classList.add("cc-optimize");
+      document.querySelector(".site-container").classList.add("cc-step-1");
+      ccHeader();
+      ccEnquiryForm();
+      ccPatientFeedback();
     } else if (document.readyState === "complete") {
       clearInterval(clearEnquiryForm);
     }
@@ -468,7 +508,6 @@ if (typeof ccEnquiryForm === "undefined" && typeof ccPatientFeedback === "undefi
 •Interaction  with patient reviews
 
 Step 2
-    - Shorten Marketing information - read more
     - rename labels
     - add [?]
 All 
