@@ -261,6 +261,7 @@ $bar-radius: 4px;
     }
 
     .cc-step-btn {
+      text-align: center;
       max-width: 154px;
       width: 100%;
       @include btn-style;
@@ -320,6 +321,7 @@ $bar-radius: 4px;
     }
     // ==
     .cc-step-btn {
+      text-align: center;
       border: none;
       border: 1px solid #19ccbb;
       padding: 11px 31px !important;
@@ -583,6 +585,13 @@ $bar-radius: 4px;
     .enquiry-form__content {
       margin-bottom: 48px;
     }
+
+    .select-wrapper__select,
+    .enquiry-form__tabs__content .input-text {
+      height: 46px;
+      padding: 12.5px 0 11px 10px;
+    }
+
     // Review section ==========================================================
     .cc-review-section {
       .cc-review-inner {
@@ -619,7 +628,7 @@ $bar-radius: 4px;
             grid-template-columns: max-content auto;
             grid-template-rows: repeat(3, auto);
             grid-auto-rows: unset;
-            gap: 10px;
+            gap: 6px;
 
             .cc-star-wrap {
               grid-area: 1/1/2/2;

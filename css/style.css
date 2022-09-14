@@ -181,6 +181,7 @@
   margin-bottom: 0;
 }
 .cc-optimize.cc-step-1 .cc-step-btn {
+  text-align: center;
   max-width: 154px;
   width: 100%;
   font-family: "Open Sans", sans-serif;
@@ -244,6 +245,7 @@
   cursor: pointer;
 }
 .cc-optimize.cc-step-2 .cc-step-btn {
+  text-align: center;
   border: none;
   border: 1px solid #19ccbb;
   padding: 11px 31px !important;
@@ -485,6 +487,11 @@
   .cc-optimize .enquiry-form__content {
     margin-bottom: 48px;
   }
+  .cc-optimize .select-wrapper__select,
+.cc-optimize .enquiry-form__tabs__content .input-text {
+    height: 46px;
+    padding: 12.5px 0 11px 10px;
+  }
   .cc-optimize .cc-review-section .cc-review-inner {
     padding: 34px 20px 40px;
     grid-template-columns: auto;
@@ -519,7 +526,7 @@
     grid-template-columns: max-content auto;
     grid-template-rows: repeat(3, auto);
     grid-auto-rows: unset;
-    gap: 10px;
+    gap: 6px;
   }
   .cc-optimize .cc-review-section .cc-review-inner .cc-review-bars .cc-row-wrap .cc-star-wrap {
     grid-area: 1/1/2/2;

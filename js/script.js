@@ -14,7 +14,7 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
       navHTML:
         '<div class="cc-inner-nav"> <span class="cc-step-1-circle"> <span class="cc-circle"><span></span></span> </span> <span class="cc-line"> <hr> </span> <span class="cc-step-2-circle"> <span class="cc-circle"><span></span></span> </span></div><div class="cc-pages"> <span class="cc-step-1">Enquiry details</span> <span class="cc-step-2">Personal details</span> </div>',
       headerHTML:
-        '<div class="cc-header-inner"> <h1>Make an enquiry</h1> <p>If you need to get in touch with us, please complete the below form and someone from your local Spire team will get back to you.</p></div>',
+        '<div id="cc-header-inner" class="cc-header-inner"> <h1>Make an enquiry</h1> <p>If you need to get in touch with us, please complete the below form and someone from your local Spire team will get back to you.</p></div>',
     };
 
     const buildNav = () => {
@@ -76,6 +76,7 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
         values.ratings[i].push(ratings[i].querySelector(".bar--percent").innerText);
       }
       addReviewSec();
+      ccTracking();
     };
 
     // Review intro section
@@ -156,6 +157,7 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
       btnWrap.classList.add("cc-btn-container");
       button.href = values.url;
       button.innerText = values.button;
+      button.setAttribute("data-track", "patient feedback : " + values.button.toLowerCase() + " : completed");
       btnWrap.appendChild(button);
       return btnWrap;
     };
@@ -292,6 +294,9 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
               }
 
               button.setAttribute("data-value", option.value);
+              button.setAttribute("data-track", option.parentNode.getAttribute("name") + " : " + option.value + " : completed");
+
+              //   button.setAttribute("data-track", option.value);
               // If option already selected add active class
               if (container.querySelector("select").value === option.value) {
                 button.className = "cc-active";
@@ -315,32 +320,24 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
     // Next / Back control button
     const addControlBtn = () => {
       if (!checkLength(".cc-step-btn")) {
-        const btn = document.createElement("button");
-        btn.type = "button";
+        const btn = document.createElement("a");
+        btn.href = "#cc-header-inner";
         btn.classList.add("cc-step-btn");
         btn.innerText = btnText();
-
+        btn.setAttribute("data-track", "next-back : go back : completed");
         btn.addEventListener("click", (e) => {
           switchSteps();
           btn.innerText = btnText();
+          if (btn.innerText === "Go Back") {
+            btn.setAttribute("data-track", "next-back : next : completed");
+          } else {
+            btn.setAttribute("data-track", "next-back : go back : completed");
+          }
         });
 
         values.allElements[12].insertBefore(btn, values.allElements[12].firstChild);
       }
     };
-
-    // const addAsterisk = () => {
-    //   const labels = [values.allElements[3], values.allElements[4], values.allElements[7], values.allElements[6]];
-    //   for (const label of labels) {
-    //     const innerLabels = label.querySelectorAll("label");
-    //     for (const inLabel of innerLabels) {
-    //       const asterisk = document.createElement("span");
-    //       asterisk.innerHTML = " *";
-    //       asterisk.className = "lime-turq";
-    //       inLabel.appendChild(asterisk);
-    //     }
-    //   }
-    // };
 
     // HELPER FUNCTIONS ==========================================================
 
@@ -466,10 +463,53 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
     addControlBtn();
     addHeaders();
     addListBtn();
-    // addAsterisk();
     switchClasses();
     hideConfirmEmail();
     addReadMore();
+  };
+
+  // ==========================================================
+  // TRACKING
+  // ==========================================================
+  const ccTracking = () => {
+    // How can we help step1 / treatment funding step1 / next - back step1-2 / submit step2 /
+    const trackClick = document.querySelectorAll("button[data-track], a[data-track], .cc-btn-container a, .enquiry-form__submit");
+    trackClick.forEach((elem) => {
+      elem.addEventListener("click", (e) => {
+        if (elem.hasAttribute("data-track")) {
+          console.log(e.target.getAttribute("data-track"));
+        } else if (elem.hasAttribute("name")) {
+          console.log(e.target.getAttribute("name") + " : " + e.target.innerText.toLowerCase() + " : completed");
+        }
+      });
+    });
+
+    // Select hospital step1 / enquiry step1 / title step2
+    const trackChange = document.querySelectorAll(
+      "#select-hospital, #enquiry, #title, #first-name, #surname, #postcode, #enquiry-email, #phone-number, .select-wrapper--dob select"
+    );
+    trackChange.forEach((elem) => {
+      elem.addEventListener("change", (e) => {
+        if (elem.tagName === "TEXTAREA" && elem.value !== "") {
+          console.log(e.target.getAttribute("name") + " : textarea : completed");
+        } else if (elem.tagName === "SELECT") {
+          if (elem.getAttribute("name").indexOf("DOB") > -1) {
+            // If its DOB
+            const day = document.querySelector('select[name="DOB-day"]');
+            const month = document.querySelector('select[name="DOB-month"]');
+            const year = document.querySelector('select[name="DOB-year"]');
+            if (day.value !== "" && month.value !== "" && year.value !== "") {
+              const val = day.getAttribute("name") + " : " + day.getAttribute("name") + " : " + day.getAttribute("name");
+              console.log(val.toLowerCase() + " : completed");
+            }
+          } else {
+            console.log(e.target.getAttribute("name") + " : " + e.target.value.toLowerCase() + " : completed");
+          }
+        } else if (elem.tagName === "INPUT") {
+          console.log(e.target.getAttribute("name") + " : filled : completed");
+        }
+      });
+    });
   };
 
   // Wait for element to load
@@ -487,29 +527,6 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
   }, 100);
 }
 
-/* 
-•Step 1 --------------
-•‘how can we help you’ form field completion
-•How  do you  intend to fund  your  treatment  formfield completion
-•Select a hospital form  field completion
-•Tell us more about your enquiry’ form fieldcompletion
+/*
 •Error  tracking on all fields
-•Interaction with ‘Next’ CTA
-•Step 2 --------------
-•Title form  field completion
-•Name form  field completion
-•Surname  form  field completion
-•Day/month/year  form  field completion
-•Email form  field completion
-•Phone  form  field completion
-•Postcode form  field completion
-•Interaction with ‘submit enquiry’ CTA
-•General --------------
-•Interaction  with patient reviews
-
-Step 2
-    - rename labels
-    - add [?]
-All 
-    - Target only when on enquire pages
-    */
+*/
