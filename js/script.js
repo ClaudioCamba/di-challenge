@@ -1,5 +1,5 @@
 // Check if function already exists on the page
-if (document.querySelectorAll(".cc-optimize").length === 0) {
+if (document.querySelectorAll(".cc-optimize").length === 0 && window.document.location.pathname.indexOf("/enquire/") > -1) {
   // ==========================================================
   // HEADER SECTION
   // ==========================================================
