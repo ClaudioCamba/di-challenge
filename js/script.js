@@ -510,6 +510,50 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
         }
       });
     });
+
+    ccErrorTrack(); // Error tracking
+  };
+
+  const ccErrorTrack = () => {
+    let storeError;
+    const errors = document.querySelectorAll(
+      ".enquiry-form__tabs__content__inner__container__element .error, .enquiry-form__tabs__content__inner__container__element .js-date-required-concatenate, #recaptchaError"
+    );
+
+    const checkError = () => {
+      for (let i = 0; i < errors.length; i++) {
+        if (errors[i].innerText.indexOf("Recaptcha") > 0) {
+          if (storeError !== "error : " + errors[i].innerText.trim()) {
+            if (errors[i].style.display !== "none") {
+              console.log("error : " + errors[i].innerText.trim());
+              storeError = "error : " + errors[i].innerText.trim();
+            }
+          }
+        } else {
+          const err = errors[i].innerText.toLocaleLowerCase();
+          const name = errors[i].parentElement.querySelector("[name]").getAttribute("name").toLocaleLowerCase();
+          if (err !== "" && name !== "") {
+            if (storeError !== "error : " + name + " : " + err) {
+              console.log("error : " + name + " : " + err);
+              storeError = "error : " + name + " : " + err;
+            }
+          }
+        }
+      }
+    };
+
+    // Dom change eventlistener
+    let observer = new MutationObserver((mutationRecords) => {
+      checkError();
+    });
+    errors.forEach((element) => {
+      // observe everything except attributes
+      observer.observe(element, {
+        childList: true, // observe direct children
+        subtree: true, // lower descendants too
+        characterDataOldValue: true, // pass old data to callback
+      });
+    });
   };
 
   // Wait for element to load
@@ -526,7 +570,3 @@ if (document.querySelectorAll(".cc-optimize").length === 0) {
     }
   }, 100);
 }
-
-/*
-•Error  tracking on all fields
-*/
